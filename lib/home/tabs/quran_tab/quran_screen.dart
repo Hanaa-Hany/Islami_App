@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app/app_colors.dart';
+import 'package:islami_app/home/tabs/quran_tab/quran_details.dart';
 import 'package:islami_app/home/tabs/quran_tab/quran_item.dart';
 
 List<String> arabicAuranSuras = [
@@ -355,11 +356,8 @@ class QuranScreen extends StatelessWidget {
   var textFieldBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(color: AppColors.primaryDark, width: 2));
-  var textStyle=TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 24,
-      color: AppColors.blackColor
-  );
+  var textStyle = TextStyle(
+      fontWeight: FontWeight.bold, fontSize: 24, color: AppColors.blackColor);
 
   @override
   Widget build(BuildContext context) {
@@ -381,7 +379,10 @@ class QuranScreen extends StatelessWidget {
                     OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 focusedBorder: textFieldBorder,
                 enabledBorder: textFieldBorder,
-                prefixIcon: Image.asset("assets/images/quran_ic.png",color: AppColors.primaryDark,),
+                prefixIcon: Image.asset(
+                  "assets/images/quran_ic.png",
+                  color: AppColors.primaryDark,
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -403,13 +404,21 @@ class QuranScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("ALanbiya",style:textStyle ,),
-                        Text("الانبياء",style: textStyle,),
-                        Text("112 vers",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: AppColors.blackColor
-                        ),),
+                        Text(
+                          "ALanbiya",
+                          style: textStyle,
+                        ),
+                        Text(
+                          "الانبياء",
+                          style: textStyle,
+                        ),
+                        Text(
+                          "112 vers",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: AppColors.blackColor),
+                        ),
                       ],
                     ),
                   ),
@@ -420,22 +429,31 @@ class QuranScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Expanded(child:
-            ListView.separated(
+            Expanded(
+                child: ListView.separated(
+              padding: EdgeInsets.all(10),
               itemBuilder: (context, index) {
-                return QuranItem(index+1,englishQuranSurahs[index],"${versesList[index]} Verses",arabicAuranSuras[index]);
-              },
-
+                return InkWell(
+                    onTap: () {
+                  Navigator.of(context).pushNamed(QuranDetails.routeName,
+                      arguments: QuranItem(
+                          index + 1,
+                          englishQuranSurahs[index],
+                          versesList[index],
+                          arabicAuranSuras[index]));
+                },
+                child: QuranItem(index + 1, englishQuranSurahs[index],
+                    "${versesList[index]} Verses", arabicAuranSuras[index])
+                );},
               separatorBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Divider(
-                    height: 1,
-                    indent: 35,
-                    endIndent: 35,
-
-                  ),
-                );
+                      padding: const EdgeInsets.all(8.0),
+                      child: Divider(
+                        height: 1,
+                        indent: 35,
+                        endIndent: 35,
+                      ),
+                    );
               },
               itemCount: versesList.length,
             ))

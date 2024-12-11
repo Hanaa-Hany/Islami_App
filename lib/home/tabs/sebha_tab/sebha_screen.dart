@@ -6,8 +6,11 @@ import '../../../app_colors.dart';
 class SebhaScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink,
+    return Column(
+      children: [
+
+      ],
+
     );
   }
 }

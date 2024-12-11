@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami_app/app_colors.dart';
 
 class MyThemeData {
   ThemeData darkTheme=ThemeData(
@@ -10,6 +11,16 @@ class MyThemeData {
       showUnselectedLabels: false,
       //backgroundColor: AppColors.primaryDark,
       //type: BottomNavigationBarType.fixed,
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.black,
+      iconTheme: IconThemeData(color: AppColors.primaryDark),
+      titleTextStyle: TextStyle(
+        color: AppColors.primaryDark,
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
+      centerTitle: true
     )
   );
 }
