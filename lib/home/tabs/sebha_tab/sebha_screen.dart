@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget{
-  static const String routeName="HomeScreen";
+import '../../../app_colors.dart';
+
+class SebhaScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Column(
+      children: [
+
+      ],
+
+    );
   }
 }
