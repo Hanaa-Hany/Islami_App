@@ -30,17 +30,16 @@ class HadithDetails extends StatelessWidget {
             height: double.infinity,
             fit: BoxFit.fill,
           ),
-          Expanded(
-              child: ListView(children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 26,vertical: 80),
-              child: Text(
-                hadithModel.content,
-                style: textStyle,
-                textDirection: TextDirection.rtl
-              ),
-            )
-          ]))
+          ListView(children: [
+                      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 26,vertical: 80),
+          child: Text(
+            hadithModel.content,
+            style: textStyle,
+            textDirection: TextDirection.rtl
+          ),
+                      )
+                    ])
         ],
       ),
     );
