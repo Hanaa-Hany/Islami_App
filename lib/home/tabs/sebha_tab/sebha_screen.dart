@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SebhaScreen extends StatefulWidget {
   @override
@@ -46,7 +47,12 @@ class _SebhaScreenState extends State<SebhaScreen> {
             height: 16,
           ),
           InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            hoverColor:Colors.transparent ,
             onTap: () {
+              HapticFeedback.vibrate();
+              SystemSound.play(SystemSoundType.alert);
               _rotateImage();
               changeAzkar();
             },

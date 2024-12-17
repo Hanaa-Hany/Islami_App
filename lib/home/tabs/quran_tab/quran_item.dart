@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:islami_app/model/sura_model.dart';
 
 class QuranItem extends StatelessWidget {
   int index;
-  String nameOfSuraEnglish;
-  String numOfVerses;
-  String nameOfSuraArabic;
+  // String nameOfSuraEnglish;
+  // String numOfVerses;
+  // String nameOfSuraArabic;
+  SuraModel suraModel;
   var textStyle = const TextStyle(
       color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20);
   var textStyleSmall = const TextStyle(
       color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14,
   );
 
-  QuranItem(this.index, this.nameOfSuraEnglish, this.numOfVerses,
-      this.nameOfSuraArabic);
+  QuranItem(this.index, this.suraModel);
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +42,17 @@ class QuranItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  nameOfSuraEnglish,
+                  suraModel.englishQuranSura,
                   style: textStyle,
                 ),
                 Text(
-                  numOfVerses,
+                  "${suraModel.versesList} verses",
                   style: textStyleSmall,
                 )
               ],
             ),
             Text(
-              nameOfSuraArabic,
+              suraModel.arabicQuranSura,
               style: textStyle,
 
             )
