@@ -2,373 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:islami_app/app_colors.dart';
 import 'package:islami_app/home/tabs/quran_tab/quran_details.dart';
 import 'package:islami_app/home/tabs/quran_tab/quran_item.dart';
+import 'package:islami_app/model/sura_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-List<String> arabicAuranSuras = [
-  "الفاتحه",
-  "البقرة",
-  "آل عمران",
-  "النساء",
-  "المائدة",
-  "الأنعام",
-  "الأعراف",
-  "الأنفال",
-  "التوبة",
-  "يونس",
-  "هود",
-  "يوسف",
-  "الرعد",
-  "إبراهيم",
-  "الحجر",
-  "النحل",
-  "الإسراء",
-  "الكهف",
-  "مريم",
-  "طه",
-  "الأنبياء",
-  "الحج",
-  "المؤمنون",
-  "النّور",
-  "الفرقان",
-  "الشعراء",
-  "النّمل",
-  "القصص",
-  "العنكبوت",
-  "الرّوم",
-  "لقمان",
-  "السجدة",
-  "الأحزاب",
-  "سبأ",
-  "فاطر",
-  "يس",
-  "الصافات",
-  "ص",
-  "الزمر",
-  "غافر",
-  "فصّلت",
-  "الشورى",
-  "الزخرف",
-  "الدّخان",
-  "الجاثية",
-  "الأحقاف",
-  "محمد",
-  "الفتح",
-  "الحجرات",
-  "ق",
-  "الذاريات",
-  "الطور",
-  "النجم",
-  "القمر",
-  "الرحمن",
-  "الواقعة",
-  "الحديد",
-  "المجادلة",
-  "الحشر",
-  "الممتحنة",
-  "الصف",
-  "الجمعة",
-  "المنافقون",
-  "التغابن",
-  "الطلاق",
-  "التحريم",
-  "الملك",
-  "القلم",
-  "الحاقة",
-  "المعارج",
-  "نوح",
-  "الجن",
-  "المزّمّل",
-  "المدّثر",
-  "القيامة",
-  "الإنسان",
-  "المرسلات",
-  "النبأ",
-  "النازعات",
-  "عبس",
-  "التكوير",
-  "الإنفطار",
-  "المطفّفين",
-  "الإنشقاق",
-  "البروج",
-  "الطارق",
-  "الأعلى",
-  "الغاشية",
-  "الفجر",
-  "البلد",
-  "الشمس",
-  "الليل",
-  "الضحى",
-  "الشرح",
-  "التين",
-  "العلق",
-  "القدر",
-  "البينة",
-  "الزلزلة",
-  "العاديات",
-  "القارعة",
-  "التكاثر",
-  "العصر",
-  "الهمزة",
-  "الفيل",
-  "قريش",
-  "الماعون",
-  "الكوثر",
-  "الكافرون",
-  "النصر",
-  "المسد",
-  "الإخلاص",
-  "الفلق",
-  "الناس"
-];
-List<String> englishQuranSurahs = [
-  "Al-Fatiha",
-  "Al-Baqarah",
-  "Aal-E-Imran",
-  "An-Nisa'",
-  "Al-Ma'idah",
-  "Al-An'am",
-  "Al-A'raf",
-  "Al-Anfal",
-  "At-Tawbah",
-  "Yunus",
-  "Hud",
-  "Yusuf",
-  "Ar-Ra'd",
-  "Ibrahim",
-  "Al-Hijr",
-  "An-Nahl",
-  "Al-Isra",
-  "Al-Kahf",
-  "Maryam",
-  "Ta-Ha",
-  "Al-Anbiya",
-  "Al-Hajj",
-  "Al-Mu'minun",
-  "An-Nur",
-  "Al-Furqan",
-  "Ash-Shu'ara",
-  "An-Naml",
-  "Al-Qasas",
-  "Al-Ankabut",
-  "Ar-Rum",
-  "Luqman",
-  "As-Sajda",
-  "Al-Ahzab",
-  "Saba",
-  "Fatir",
-  "Ya-Sin",
-  "As-Saffat",
-  "Sad",
-  "Az-Zumar",
-  "Ghafir",
-  "Fussilat",
-  "Ash-Shura",
-  "Az-Zukhruf",
-  "Ad-Dukhan",
-  "Al-Jathiya",
-  "Al-Ahqaf",
-  "Muhammad",
-  "Al-Fath",
-  "Al-Hujurat",
-  "Qaf",
-  "Adh-Dhariyat",
-  "At-Tur",
-  "An-Najm",
-  "Al-Qamar",
-  "Ar-Rahman",
-  "Al-Waqi'a",
-  "Al-Hadid",
-  "Al-Mujadila",
-  "Al-Hashr",
-  "Al-Mumtahina",
-  "As-Saff",
-  "Al-Jumu'a",
-  "Al-Munafiqun",
-  "At-Taghabun",
-  "At-Talaq",
-  "At-Tahrim",
-  "Al-Mulk",
-  "Al-Qalam",
-  "Al-Haqqah",
-  "Al-Ma'arij",
-  "Nuh",
-  "Al-Jinn",
-  "Al-Muzzammil",
-  "Al-Muddathir",
-  "Al-Qiyamah",
-  "Al-Insan",
-  "Al-Mursalat",
-  "An-Naba'",
-  "An-Nazi'at",
-  "Abasa",
-  "At-Takwir",
-  "Al-Infitar",
-  "Al-Mutaffifin",
-  "Al-Inshiqaq",
-  "Al-Buruj",
-  "At-Tariq",
-  "Al-A'la",
-  "Al-Ghashiyah",
-  "Al-Fajr",
-  "Al-Balad",
-  "Ash-Shams",
-  "Al-Lail",
-  "Ad-Duha",
-  "Ash-Sharh",
-  "At-Tin",
-  "Al-Alaq",
-  "Al-Qadr",
-  "Al-Bayyina",
-  "Az-Zalzalah",
-  "Al-Adiyat",
-  "Al-Qari'a",
-  "At-Takathur",
-  "Al-Asr",
-  "Al-Humazah",
-  "Al-Fil",
-  "Quraysh",
-  "Al-Ma'un",
-  "Al-Kawthar",
-  "Al-Kafirun",
-  "An-Nasr",
-  "Al-Masad",
-  "Al-Ikhlas",
-  "Al-Falaq",
-  "An-Nas"
-];
-List<String> versesList = [
-  '7',
-  '286',
-  '200',
-  '176',
-  '120',
-  '165',
-  '206',
-  '75',
-  '129',
-  '109',
-  '123',
-  '111',
-  '43',
-  '52',
-  '99',
-  '128',
-  '111',
-  '110',
-  '98',
-  '135',
-  '112',
-  '78',
-  '118',
-  '64',
-  '77',
-  '227',
-  '93',
-  '88',
-  '69',
-  '60',
-  '34',
-  '30',
-  '73',
-  '54',
-  '45',
-  '83',
-  '182',
-  '88',
-  '75',
-  '85',
-  '54',
-  '53',
-  '89',
-  '59',
-  '37',
-  '35',
-  '38',
-  '29',
-  '18',
-  '45',
-  '60',
-  '49',
-  '62',
-  '55',
-  '78',
-  '96',
-  '29',
-  '22',
-  '24',
-  '13',
-  '14',
-  '11',
-  '11',
-  '18',
-  '12',
-  '12',
-  '30',
-  '52',
-  '52',
-  '44',
-  '28',
-  '28',
-  '20',
-  '56',
-  '40',
-  '31',
-  '50',
-  '40',
-  '46',
-  '42',
-  '29',
-  '19',
-  '36',
-  '25',
-  '22',
-  '17',
-  '19',
-  '26',
-  '30',
-  '20',
-  '15',
-  '21',
-  '11',
-  '8',
-  '5',
-  '19',
-  '5',
-  '8',
-  '8',
-  '11',
-  '11',
-  '8',
-  '3',
-  '9',
-  '5',
-  '4',
-  '6',
-  '3',
-  '6',
-  '3',
-  '5',
-  '4',
-  '5',
-  '6'
-];
+class QuranScreen extends StatefulWidget {
+  @override
+  State<QuranScreen> createState() => _QuranScreenState();
+}
 
-class QuranScreen extends StatelessWidget {
+class _QuranScreenState extends State<QuranScreen> {
+  void addSuraList() {
+    for (int i = 0; i < 114; i++) {
+      SuraModel.suraList.add(SuraModel(
+          fileName: "${i + 1}.txt",
+          arabicQuranSura: SuraModel.arabicQuranSuraList[i],
+          englishQuranSura: SuraModel.englishQuranSuraList[i],
+          versesList: SuraModel.versesListList[i]));
+    }
+  }
+   String suraEn="";
+   String suraAr="";
+   String suraVe="";
+
+
+  @override
+  void initState()  {
+    // TODO: implement initState
+    super.initState();
+    addSuraList();
+    print("SuraModel.suraList.length");
+    getData();
+
+  }
+
+  List<SuraModel> filterList = SuraModel.suraList;
+  String searchContent = '';
+
   var textFieldBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
-      borderSide: BorderSide(color: AppColors.primaryDark, width: 2));
-  var textStyle = TextStyle(
+      borderSide: const BorderSide(color: AppColors.primaryDark, width: 2));
+
+  var textStyle = const TextStyle(
       fontWeight: FontWeight.bold, fontSize: 24, color: AppColors.blackColor);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         margin: EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.asset("assets/images/Logo.png"),
             TextField(
+              onChanged: (value) {
+                searchContent = value;
+                print(searchContent);
+                setState(() {
+                  filterList = SuraModel.suraList.where((SuraModel) {
+                    return SuraModel.arabicQuranSura.contains(searchContent) ||
+                        SuraModel.englishQuranSura
+                            .toLowerCase()
+                            .contains(searchContent.toLowerCase());
+                  }).toList();
+                  print("Filtered List : ${filterList.length}");
+                });
+              },
               decoration: InputDecoration(
                 hintText: "Sura Name",
                 hintStyle: TextStyle(
@@ -394,38 +94,40 @@ class QuranScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            Card(
-              color: AppColors.primaryDark,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(17.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            searchContent.isNotEmpty
+                ? SizedBox()
+                : Card(
+                    color: AppColors.primaryDark,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "ALanbiya",
-                          style: textStyle,
+                        Padding(
+                          padding: const EdgeInsets.all(17.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                suraEn,
+                                style: textStyle,
+                              ),
+                              Text(
+                                suraAr,
+                                style: textStyle,
+                              ),
+                              Text(
+                                suraVe,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: AppColors.blackColor),
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          "الانبياء",
-                          style: textStyle,
-                        ),
-                        Text(
-                          "112 vers",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: AppColors.blackColor),
-                        ),
+                        Image.asset("assets/images/recentely_item.png")
                       ],
                     ),
                   ),
-                  Image.asset("assets/images/recentely_item.png")
-                ],
-              ),
-            ),
             SizedBox(
               height: 20,
             ),
@@ -434,32 +136,46 @@ class QuranScreen extends StatelessWidget {
               padding: EdgeInsets.all(10),
               itemBuilder: (context, index) {
                 return InkWell(
-                    onTap: () {
-                  Navigator.of(context).pushNamed(QuranDetails.routeName,
-                      arguments: QuranItem(
-                          index + 1,
-                          englishQuranSurahs[index],
-                          versesList[index],
-                          arabicAuranSuras[index]));
-                },
-                child: QuranItem(index + 1, englishQuranSurahs[index],
-                    "${versesList[index]} Verses", arabicAuranSuras[index])
-                );},
-              separatorBuilder: (context, index) {
-                return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Divider(
-                        height: 1,
-                        indent: 35,
-                        endIndent: 35,
-                      ),
-                    );
+                    onTap: () async {
+
+                      Navigator.of(context).pushNamed(QuranDetails.routeName,
+                          arguments: QuranItem(index + 1, filterList[index]));
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.setString("suraEn",SuraModel.suraList[index].englishQuranSura);
+                      await prefs.setString("suraAr",SuraModel.suraList[index].arabicQuranSura);
+                      await prefs.setString("suraVe",SuraModel.suraList[index].versesList);
+                      getData();
+
+                    },
+                    child: QuranItem(index + 1, filterList[index]));
               },
-              itemCount: versesList.length,
+              separatorBuilder: (context, index) {
+                return const Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(
+                    height: 1,
+                    indent: 35,
+                    endIndent: 35,
+                  ),
+                );
+              },
+              itemCount: filterList.length,
             ))
           ],
         ),
       ),
     );
+  }
+  void getData()async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    suraEn = prefs.getString('suraEn')??"";
+    suraAr = prefs.getString('suraAr')??"";
+    suraVe = prefs.getString('suraVe')??"";
+    setState(() {
+
+    });
+    print('\x1B[35mjjjjjjjjjjjjjjjj$suraVe\x1B[0m');
+    print("jjjjjjjjjjjjjjjj$suraVe");
   }
 }

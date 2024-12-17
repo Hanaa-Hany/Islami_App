@@ -32,7 +32,7 @@ class _QuranDetailsState extends State<QuranDetails> {
     return
       Scaffold(
       appBar: AppBar(
-        title: Text(quranItem.nameOfSuraEnglish,),
+        title: Text(quranItem.suraModel.englishQuranSura,),
       ),
       body:
       Container(
@@ -45,7 +45,7 @@ class _QuranDetailsState extends State<QuranDetails> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 24),
-              child: Text(quranItem.nameOfSuraArabic,style: textStyle,),
+              child: Text(quranItem.suraModel.arabicQuranSura,style: textStyle,),
             ),
             Expanded(child:
             ListView(
